@@ -3,7 +3,6 @@ import java.awt.Desktop
 import java.net.InetSocketAddress
 import java.net.URI
 
-
 class BootstrapCard(
     private val title: String,
     private val text: String,
@@ -146,6 +145,4 @@ fun main() {
     if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
         Desktop.getDesktop().browse(URI("http://localhost:$port"))
     }
-
-    println("Appuyez sur Ctrl+C pour arrêter le serveur")
 }
