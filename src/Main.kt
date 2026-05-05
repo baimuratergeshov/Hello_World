@@ -3,7 +3,7 @@ import java.awt.Desktop
 import java.net.InetSocketAddress
 import java.net.URI
 
-// Classe pour créer une carte Bootstrap
+
 class BootstrapCard(
     private val title: String,
     private val text: String,
@@ -22,7 +22,6 @@ class BootstrapCard(
     }
 }
 
-// Classe pour créer une barre de navigation Bootstrap
 class BootstrapNavbar(private val brandName: String, private val links: List<Pair<String, String>>) {
     fun render(): String {
         val navItems = links.joinToString("") { (name, url) ->
@@ -47,7 +46,6 @@ class BootstrapNavbar(private val brandName: String, private val links: List<Pai
     }
 }
 
-// Classe pour créer un pied de page Bootstrap
 class BootstrapFooter(private val text: String, private val year: Int) {
     fun render(): String {
         return """
@@ -60,7 +58,6 @@ class BootstrapFooter(private val text: String, private val year: Int) {
     }
 }
 
-// Classe pour créer un conteneur Bootstrap
 class BootstrapContainer(private val content: String) {
     fun render(): String {
         return """
@@ -75,9 +72,7 @@ fun main() {
     val port = 8080
     val server = HttpServer.create(InetSocketAddress(port), 0)
 
-    // Définition de la route "/"
     server.createContext("/") { exchange ->
-        // Création des composants
         val navbar = BootstrapNavbar(
             "Hello World App",
             listOf(
@@ -89,18 +84,17 @@ fun main() {
 
         val cards = listOf(
             BootstrapCard(
-                "Kotlin",
-                "Un langage moderne et puissant pour le développement web et mobile.",
-                "Découvrir"
+                "Carte 1",
+                "description de la carte 1",
+                "Ouvrir"
             ),
             BootstrapCard(
-                "Bootstrap",
-                "Le framework CSS le plus populaire pour créer des sites responsive.",
-                "En savoir plus"
+                "Carte 2",
+                "description de la carte 2"
             ),
             BootstrapCard(
-                "HTTP Server",
-                "Serveur HTTP simple et efficace intégré à Java.",
+                "Carte 3",
+                "description de la carte 3",
                 "Explorer"
             )
         )
@@ -114,14 +108,12 @@ fun main() {
         val container = BootstrapContainer(
             """
                 <h1 class="text-center mb-5">Hello World!</h1>
-                <p class="text-center lead mb-5">Bienvenue sur mon premier site web en Kotlin</p>
                 $cardsHtml
             """.trimIndent()
         )
 
         val footer = BootstrapFooter("Hello World App - Tous droits réservés", 2024)
 
-        // Construction de la page HTML complète
         val htmlResponse = """
             <!DOCTYPE html>
             <html lang="fr">
@@ -141,7 +133,6 @@ fun main() {
             </html>
         """.trimIndent()
 
-        // Envoi de la réponse HTTP
         exchange.responseHeaders.set("Content-Type", "text/html; charset=UTF-8")
         exchange.sendResponseHeaders(200, htmlResponse.toByteArray().size.toLong())
         exchange.responseBody.use { output ->
@@ -149,11 +140,9 @@ fun main() {
         }
     }
 
-    // Démarrage du serveur
     server.start()
     println("Serveur démarré sur http://localhost:$port")
 
-    // Ouverture automatique du navigateur
     if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
         Desktop.getDesktop().browse(URI("http://localhost:$port"))
     }
